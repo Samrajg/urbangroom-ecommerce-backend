@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String
     },
+    skinProfile: {
+      type: mongoose.Schema.Types.Mixed
+    },
     address: [
       {
         street: String,

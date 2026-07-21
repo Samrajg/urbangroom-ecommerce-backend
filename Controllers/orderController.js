@@ -101,8 +101,30 @@ const myOrders = async (req, res) => {
   }
 };
 
+// Admin: Get all orders => /api/admin/orders
+const allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find().sort("-createdAt").populate("user", "name email");
+
+    let totalAmount = 0;
+    orders.forEach(order => {
+      totalAmount += order.totalPrice;
+    });
+
+    res.status(200).json({
+      success: true,
+      totalAmount,
+      count: orders.length,
+      orders
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message || "Failed to fetch all orders" });
+  }
+};
+
 module.exports = {
   newOrder,
   getSingleOrder,
-  myOrders
+  myOrders,
+  allOrders
 };

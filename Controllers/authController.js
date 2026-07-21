@@ -130,6 +130,7 @@ const updateUserProfile = async (req, res) => {
     if (req.body.avatar) user.avatar = req.body.avatar;
     if (req.body.address) user.address = req.body.address;
     if (req.body.password) user.password = req.body.password;
+    if (req.body.skinProfile) user.skinProfile = req.body.skinProfile;
 
     await user.save();
 
