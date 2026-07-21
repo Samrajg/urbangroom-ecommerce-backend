@@ -2,11 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 const connectDB = async () => {
   try {
@@ -23,7 +26,14 @@ const connectDB = async () => {
 app.get("/", (req, res) => {
   res.json({ message: "Server is running successfully" });
 });
-app.use('/api/users', require('./Routers/UserRouter'));
+
+// Register routers
+app.use("/api/users", require("./Routers/UserRouter")); // legacy register route
+app.use("/api/auth", require("./Routers/authRouter"));
+app.use("/api", require("./Routers/productRouter"));
+app.use("/api", require("./Routers/cartRouter"));
+app.use("/api", require("./Routers/orderRouter"));
+app.use("/api", require("./Routers/paymentRouter"));
 
 connectDB();
 
