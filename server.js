@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
 
 dotenv.config();
 
@@ -26,6 +28,9 @@ const connectDB = async () => {
 app.get("/", (req, res) => {
   res.json({ message: "Server is running successfully" });
 });
+
+// Swagger documentation route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Register routers
 app.use("/api/users", require("./Routers/UserRouter")); // legacy register route
